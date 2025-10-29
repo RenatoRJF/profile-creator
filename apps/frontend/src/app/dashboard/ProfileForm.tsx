@@ -7,9 +7,10 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
+import type { Profile } from '@profile-creator/shared';
 
 interface ProfileFormProps {
-  initialData: any;
+  initialData: Profile | null;
 }
 
 export default function ProfileForm({ initialData }: ProfileFormProps) {
@@ -38,7 +39,7 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
     <form onSubmit={handleSubmit} className="space-y-4">
       {mutation.isError && (
         <div className="bg-destructive/15 border border-destructive text-destructive px-4 py-3 rounded-md text-sm">
-          {(mutation.error as any)?.error || 'An error occurred'}
+          {mutation.error instanceof Error ? mutation.error.message : 'An error occurred'}
         </div>
       )}
       {mutation.isSuccess && (

@@ -4,6 +4,7 @@ import { Search, User, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import ProfilesSection from '@/components/ProfilesSection';
+import type { Profile } from '@profile-creator/shared';
 
 interface PageProps {
   searchParams: Promise<{ skills?: string }>;
@@ -16,7 +17,7 @@ export default async function DiscoverPage({ searchParams }: PageProps) {
   const allProfiles = await getAllProfiles(skills);
 
   // Filter out current user's profile
-  const profiles = allProfiles.filter((profile: any) => profile.username !== user?.username);
+  const profiles = allProfiles.filter((profile: Profile) => profile.username !== user?.username);
 
   return (
     <div className="min-h-screen bg-background">

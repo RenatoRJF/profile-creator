@@ -2,6 +2,7 @@
 
 import { getAuthToken } from '../dal';
 import { revalidatePath } from 'next/cache';
+import type { UpdateProfileInput } from '@profile-creator/shared';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
 
@@ -62,7 +63,7 @@ export async function updateProfile(formData: FormData) {
     return { error: 'Not authenticated' };
   }
 
-  const updateData: any = {};
+  const updateData: UpdateProfileInput = {};
   if (name) updateData.name = name;
   if (bio !== undefined) updateData.bio = bio;
   if (profileImageUrl !== undefined) updateData.profileImageUrl = profileImageUrl;
