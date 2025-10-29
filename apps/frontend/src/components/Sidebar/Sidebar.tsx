@@ -58,10 +58,13 @@ export default function Sidebar({ currentPath }: SidebarProps) {
       {/* Sidebar */}
       <aside
         className={cn(
-          'w-64 border-r bg-background h-screen flex flex-col transition-transform duration-300 ease-in-out z-50',
+          'w-64 border-r bg-background h-screen flex flex-col transition-transform duration-300 ease-in-out',
+          // Mobile: fixed and slides in/out
+          'fixed top-0 left-0 z-50 lg:relative lg:z-auto',
+          // Desktop: always visible when open (handled by parent wrapper)
           'lg:sticky lg:top-0',
-          'fixed top-0 left-0',
-          isOpen ? 'translate-x-0' : '-translate-x-full'
+          // Translation
+          isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         )}
       >
       {/* Logo/Brand */}
