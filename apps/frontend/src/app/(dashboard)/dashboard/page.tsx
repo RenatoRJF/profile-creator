@@ -2,13 +2,12 @@ import { redirect } from 'next/navigation';
 import { verifyAuth } from '@/lib/dal';
 import { getMyProfile } from '@/lib/actions/profile';
 import { getInitials } from '@/lib/utils/avatar';
-import { UserCircle, Search, Edit } from 'lucide-react';
+import { UserCircle, Search, Edit, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
-import AppLayout from '@/components/AppLayout';
 
 export default async function DashboardPage() {
   const { isAuth, user } = await verifyAuth();
@@ -20,8 +19,7 @@ export default async function DashboardPage() {
   const profile = await getMyProfile();
 
   return (
-    <AppLayout>
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="space-y-8">
           <div>
             <h2 className="text-3xl font-bold tracking-tight">Welcome back, {user?.username}!</h2>
@@ -140,7 +138,6 @@ export default async function DashboardPage() {
             </Card>
           </div>
         </div>
-      </div>
-    </AppLayout>
+    </div>
   );
 }

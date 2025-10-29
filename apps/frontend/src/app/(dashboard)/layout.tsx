@@ -1,9 +1,10 @@
-'use client';
-
 import Sidebar from '@/components/Sidebar';
-import type { AppLayoutProps } from './AppLayout.types';
 
-export default function AppLayout({ children }: AppLayoutProps) {
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <div className="flex min-h-screen">
       <Sidebar />
