@@ -81,7 +81,7 @@ export default function Sidebar({ currentPath }: SidebarProps) {
           variant="outline"
           size="icon"
           onClick={toggle}
-          className="hidden lg:flex absolute top-1/2 -translate-y-1/2 -right-4 rounded-full shadow-md bg-background z-[60]"
+          className="hidden lg:flex absolute top-1/2 -translate-y-1/2 -right-4 rounded-full shadow-md bg-background z-50"
           aria-label="Toggle sidebar"
         >
           <ChevronLeft className="h-4 w-4" />
