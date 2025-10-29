@@ -76,15 +76,15 @@ export default function Sidebar({ currentPath }: SidebarProps) {
             <p className="text-xs text-muted-foreground">Connect with creators</p>
           </div>
         </Link>
-        {/* Desktop toggle button - absolute positioned */}
+        {/* Desktop toggle button - 50% outside sidebar edge, vertically centered */}
         <Button
-          variant="ghost"
+          variant="outline"
           size="icon"
           onClick={toggle}
-          className="hidden lg:flex absolute top-4 right-2"
+          className="hidden lg:flex absolute top-1/2 -translate-y-1/2 -right-4 rounded-full shadow-md bg-background"
           aria-label="Toggle sidebar"
         >
-          <ChevronLeft className="h-5 w-5" />
+          <ChevronLeft className="h-4 w-4" />
         </Button>
       </div>
 
