@@ -58,17 +58,17 @@ export default function Sidebar({ currentPath }: SidebarProps) {
       {/* Sidebar */}
       <aside
         className={cn(
-          'w-64 border-r bg-background h-screen flex flex-col transition-transform duration-300 ease-in-out',
-          // Mobile: fixed and slides in/out
-          'fixed top-0 left-0 z-50 lg:relative lg:z-auto',
-          // Desktop: sticky within wrapper
-          'lg:sticky lg:top-0',
-          // Translation - hide when closed
+          'w-64 border-r bg-background flex flex-col transition-transform duration-300 ease-in-out',
+          // Fixed on all screen sizes for consistent behavior
+          'fixed top-0 left-0 h-screen',
+          // Z-index: higher on mobile for overlay, lower on desktop
+          isOpen ? 'z-50' : 'z-50 lg:z-auto',
+          // Translation - hide/show on both mobile and desktop
           isOpen ? 'translate-x-0' : '-translate-x-full'
         )}
       >
       {/* Logo/Brand */}
-      <div className="p-6 border-b relative">
+      <div className="p-6 border-b">
         <Link href="/dashboard" className="flex items-center gap-2">
           <User className="h-8 w-8 text-primary" />
           <div>
@@ -76,16 +76,6 @@ export default function Sidebar({ currentPath }: SidebarProps) {
             <p className="text-xs text-muted-foreground">Connect with creators</p>
           </div>
         </Link>
-        {/* Desktop toggle button - 50% outside sidebar edge, vertically centered */}
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={toggle}
-          className="hidden lg:flex absolute top-1/2 -translate-y-1/2 -right-4 rounded-full shadow-md bg-background z-50"
-          aria-label="Toggle sidebar"
-        >
-          <ChevronLeft className="h-4 w-4" />
-        </Button>
       </div>
 
       {/* Navigation */}
