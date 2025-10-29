@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Search, User, Settings, LogOut, Menu, X } from 'lucide-react';
+import { Home, Search, User, Settings, LogOut, Menu, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { logout } from '@/lib/actions/auth';
@@ -66,13 +66,25 @@ export default function Sidebar({ currentPath }: SidebarProps) {
       >
       {/* Logo/Brand */}
       <div className="p-6 border-b">
-        <Link href="/dashboard" className="flex items-center gap-2">
-          <User className="h-8 w-8 text-primary" />
-          <div>
-            <h1 className="text-xl font-bold">Profile Creator</h1>
-            <p className="text-xs text-muted-foreground">Connect with creators</p>
-          </div>
-        </Link>
+        <div className="flex items-center justify-between">
+          <Link href="/dashboard" className="flex items-center gap-2">
+            <User className="h-8 w-8 text-primary" />
+            <div>
+              <h1 className="text-xl font-bold">Profile Creator</h1>
+              <p className="text-xs text-muted-foreground">Connect with creators</p>
+            </div>
+          </Link>
+          {/* Desktop toggle button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={toggle}
+            className="hidden lg:flex"
+            aria-label="Toggle sidebar"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </Button>
+        </div>
       </div>
 
       {/* Navigation */}
@@ -112,6 +124,19 @@ export default function Sidebar({ currentPath }: SidebarProps) {
         </form>
       </div>
     </aside>
+
+      {/* Floating toggle button when sidebar is closed (desktop only) */}
+      {!isOpen && (
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={toggle}
+          className="hidden lg:flex fixed top-4 left-4 z-40 shadow-md"
+          aria-label="Open sidebar"
+        >
+          <ChevronRight className="h-5 w-5" />
+        </Button>
+      )}
     </>
   );
 }
