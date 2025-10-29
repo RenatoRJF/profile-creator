@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { getInitials } from '@/lib/utils/avatar';
 import { Search } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -84,12 +85,7 @@ export default function ProfilesSection({ profiles }: ProfilesSectionProps) {
                     <Avatar className="h-16 w-16">
                       <AvatarImage src={profile.profileImageUrl} alt={profile.name} />
                       <AvatarFallback className="text-lg">
-                        {profile.name
-                          .split(' ')
-                          .map((n) => n[0])
-                          .join('')
-                          .toUpperCase()
-                          .slice(0, 2)}
+                        {getInitials(profile.name)}
                       </AvatarFallback>
                     </Avatar>
                     <div className="flex-1 min-w-0">

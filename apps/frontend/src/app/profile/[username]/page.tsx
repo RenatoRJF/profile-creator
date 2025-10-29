@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { getProfileByUsername } from '@/lib/actions/profile';
-import { User, Mail, Calendar, ArrowLeft } from 'lucide-react';
+import { getInitials } from '@/lib/utils/avatar';
+import { User, Calendar, ArrowLeft } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -46,12 +47,7 @@ export default async function ProfilePage({ params }: PageProps) {
                 <Avatar className="h-24 w-24">
                   <AvatarImage src={profile.profileImageUrl} alt={profile.name} />
                   <AvatarFallback className="text-2xl">
-                    {profile.name
-                      .split(' ')
-                      .map((n: string) => n[0])
-                      .join('')
-                      .toUpperCase()
-                      .slice(0, 2)}
+                    {getInitials(profile.name)}
                   </AvatarFallback>
                 </Avatar>
                 <div className="flex-1 min-w-0">

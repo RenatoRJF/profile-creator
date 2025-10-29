@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import { verifyAuth } from '@/lib/dal';
 import { getMyProfile } from '@/lib/actions/profile';
+import { getInitials } from '@/lib/utils/avatar';
 import { User, UserCircle, Search, Settings, Edit } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -68,12 +69,7 @@ export default async function DashboardPage() {
                   <Avatar className="h-20 w-20">
                     <AvatarImage src={profile.profileImageUrl} alt={profile.name} />
                     <AvatarFallback className="text-2xl">
-                      {profile.name
-                        .split(' ')
-                        .map((n: string) => n[0])
-                        .join('')
-                        .toUpperCase()
-                        .slice(0, 2)}
+                      {getInitials(profile.name)}
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex-1 space-y-4">
