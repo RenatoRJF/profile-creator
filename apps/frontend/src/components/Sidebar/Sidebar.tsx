@@ -106,5 +106,6 @@ export default function Sidebar({ currentPath }: SidebarProps) {
         </form>
       </div>
     </aside>
+    </>
   );
 }
