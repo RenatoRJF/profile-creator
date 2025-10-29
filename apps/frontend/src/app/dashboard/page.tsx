@@ -2,13 +2,13 @@ import { redirect } from 'next/navigation';
 import { verifyAuth } from '@/lib/dal';
 import { getMyProfile } from '@/lib/actions/profile';
 import { getInitials } from '@/lib/utils/avatar';
-import { User, UserCircle, Search, Settings, Edit } from 'lucide-react';
+import { UserCircle, Search, Edit } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
-import LogoutButton from './LogoutButton';
+import AppLayout from '@/components/AppLayout';
 
 export default async function DashboardPage() {
   const { isAuth, user } = await verifyAuth();
@@ -20,28 +20,8 @@ export default async function DashboardPage() {
   const profile = await getMyProfile();
 
   return (
-    <div className="min-h-screen bg-background">
-      <nav className="border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16 items-center">
-            <div className="flex items-center gap-2">
-              <User className="h-6 w-6" />
-              <h1 className="text-xl font-bold">Creator Profile</h1>
-            </div>
-            <div className="flex items-center gap-4">
-              <Link href="/discover">
-                <Button variant="outline">
-                  <Search className="h-4 w-4 mr-2" />
-                  Discover
-                </Button>
-              </Link>
-              <LogoutButton />
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <AppLayout>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="space-y-8">
           <div>
             <h2 className="text-3xl font-bold tracking-tight">Welcome back, {user?.username}!</h2>
@@ -160,7 +140,7 @@ export default async function DashboardPage() {
             </Card>
           </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </AppLayout>
   );
 }

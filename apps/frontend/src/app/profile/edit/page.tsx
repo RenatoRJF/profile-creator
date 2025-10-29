@@ -1,10 +1,11 @@
 import { redirect } from 'next/navigation';
 import { verifyAuth } from '@/lib/dal';
 import { getMyProfile } from '@/lib/actions/profile';
-import { User, Settings, ArrowLeft } from 'lucide-react';
+import { Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
+import AppLayout from '@/components/AppLayout';
 import ProfileForm from '../../dashboard/ProfileForm';
 
 export default async function EditProfilePage() {
@@ -17,27 +18,8 @@ export default async function EditProfilePage() {
   const profile = await getMyProfile();
 
   return (
-    <div className="min-h-screen bg-background">
-      <nav className="border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16 items-center">
-            <div className="flex items-center gap-2">
-              <User className="h-6 w-6" />
-              <h1 className="text-xl font-bold">Creator Profile</h1>
-            </div>
-            <div className="flex items-center gap-4">
-              <Link href="/dashboard">
-                <Button variant="outline">
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Back to Dashboard
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <AppLayout>
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="space-y-8">
           <div>
             <h2 className="text-3xl font-bold tracking-tight">
@@ -81,7 +63,7 @@ export default async function EditProfilePage() {
             </Card>
           )}
         </div>
-      </main>
-    </div>
+      </div>
+    </AppLayout>
   );
 }
