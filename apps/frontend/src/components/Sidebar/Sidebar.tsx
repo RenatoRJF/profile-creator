@@ -59,9 +59,9 @@ export default function Sidebar({ currentPath }: SidebarProps) {
       <aside
         className={cn(
           'w-64 border-r bg-background h-screen flex flex-col transition-transform duration-300 ease-in-out z-50',
-          'lg:sticky lg:top-0 lg:translate-x-0',
+          'lg:sticky lg:top-0',
           'fixed top-0 left-0',
-          isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+          isOpen ? 'translate-x-0' : '-translate-x-full'
         )}
       >
       {/* Logo/Brand */}
@@ -128,13 +128,13 @@ export default function Sidebar({ currentPath }: SidebarProps) {
       {/* Floating toggle button when sidebar is closed (desktop only) */}
       {!isOpen && (
         <Button
-          variant="outline"
+          variant="default"
           size="icon"
           onClick={toggle}
-          className="hidden lg:flex fixed top-4 left-4 z-40 shadow-md"
+          className="hidden lg:flex fixed top-6 left-6 z-50 shadow-lg rounded-full"
           aria-label="Open sidebar"
         >
-          <ChevronRight className="h-5 w-5" />
+          <Menu className="h-5 w-5" />
         </Button>
       )}
     </>
