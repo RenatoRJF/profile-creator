@@ -68,26 +68,24 @@ export default function Sidebar({ currentPath }: SidebarProps) {
         )}
       >
       {/* Logo/Brand */}
-      <div className="p-6 border-b">
-        <div className="flex items-center justify-between">
-          <Link href="/dashboard" className="flex items-center gap-2">
-            <User className="h-8 w-8 text-primary" />
-            <div>
-              <h1 className="text-xl font-bold">Profile Creator</h1>
-              <p className="text-xs text-muted-foreground">Connect with creators</p>
-            </div>
-          </Link>
-          {/* Desktop toggle button */}
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={toggle}
-            className="hidden lg:flex"
-            aria-label="Toggle sidebar"
-          >
-            <ChevronLeft className="h-5 w-5" />
-          </Button>
-        </div>
+      <div className="p-6 border-b relative">
+        <Link href="/dashboard" className="flex items-center gap-2">
+          <User className="h-8 w-8 text-primary" />
+          <div>
+            <h1 className="text-xl font-bold">Profile Creator</h1>
+            <p className="text-xs text-muted-foreground">Connect with creators</p>
+          </div>
+        </Link>
+        {/* Desktop toggle button - absolute positioned */}
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={toggle}
+          className="hidden lg:flex absolute top-4 right-2"
+          aria-label="Toggle sidebar"
+        >
+          <ChevronLeft className="h-5 w-5" />
+        </Button>
       </div>
 
       {/* Navigation */}
