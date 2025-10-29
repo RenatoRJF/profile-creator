@@ -2,11 +2,14 @@
 
 import { useTransition } from 'react';
 import { useRouter } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useCreateProfile, useUpdateProfile } from '@/hooks/useProfile';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
+import { profileSchema, type ProfileFormData } from '@/lib/schemas/profile';
 import type { Profile } from '@profile-creator/shared';
 
 interface ProfileFormProps {
@@ -22,9 +25,26 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
 
   const mutation = initialData ? updateMutation : createMutation;
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<ProfileFormData>({
+    resolver: zodResolver(profileSchema),
+    defaultValues: {
+      name: initialData?.name || '',
+      bio: initialData?.bio || '',
+      profileImageUrl: initialData?.profileImageUrl || '',
+      skills: initialData?.skills?.join(', ') || '',
+    },
+  });
+
+  async function onSubmit(data: ProfileFormData) {
+    const formData = new FormData();
+    formData.append('name', data.name);
+    formData.append('bio', data.bio || '');
+    formData.append('profileImageUrl', data.profileImageUrl || '');
+    formData.append('skills', data.skills);
 
     mutation.mutate(formData, {
       onSuccess: () => {
@@ -36,7 +56,7 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       {mutation.isError && (
         <div className="bg-destructive/15 border border-destructive text-destructive px-4 py-3 rounded-md text-sm">
           {mutation.error instanceof Error ? mutation.error.message : 'An error occurred'}
@@ -52,23 +72,26 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
         <Label htmlFor="name">Name *</Label>
         <Input
           id="name"
-          name="name"
           type="text"
-          required
           placeholder="Your full name"
-          defaultValue={initialData?.name || ''}
+          {...register('name')}
         />
+        {errors.name && (
+          <p className="text-xs text-destructive">{errors.name.message}</p>
+        )}
       </div>
 
       <div className="space-y-2">
         <Label htmlFor="bio">Bio</Label>
         <Textarea
           id="bio"
-          name="bio"
           rows={4}
           placeholder="Tell us about yourself..."
-          defaultValue={initialData?.bio || ''}
+          {...register('bio')}
         />
+        {errors.bio && (
+          <p className="text-xs text-destructive">{errors.bio.message}</p>
+        )}
         <p className="text-xs text-muted-foreground">
           Maximum 500 characters
         </p>
@@ -78,11 +101,13 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
         <Label htmlFor="profileImageUrl">Profile Image URL</Label>
         <Input
           id="profileImageUrl"
-          name="profileImageUrl"
           type="url"
           placeholder="https://example.com/your-image.jpg"
-          defaultValue={initialData?.profileImageUrl || ''}
+          {...register('profileImageUrl')}
         />
+        {errors.profileImageUrl && (
+          <p className="text-xs text-destructive">{errors.profileImageUrl.message}</p>
+        )}
         <p className="text-xs text-muted-foreground">
           Provide a URL to your profile image
         </p>
@@ -92,24 +117,31 @@ export default function ProfileForm({ initialData }: ProfileFormProps) {
         <Label htmlFor="skills">Skills / Tools *</Label>
         <Input
           id="skills"
-          name="skills"
           type="text"
-          required
           placeholder="React, TypeScript, Node.js"
-          defaultValue={initialData?.skills?.join(', ') || ''}
+          {...register('skills')}
         />
+        {errors.skills && (
+          <p className="text-xs text-destructive">{errors.skills.message}</p>
+        )}
         <p className="text-xs text-muted-foreground">
           Comma-separated list of your skills and tools
         </p>
       </div>
 
-      <Button type="submit" className="w-full" disabled={mutation.isPending || isPending}>
+      <Button
+        type="submit"
+        className="w-full"
+        disabled={mutation.isPending || isPending || isSubmitting}
+      >
         {mutation.isPending
           ? initialData
             ? 'Updating...'
             : 'Creating...'
           : isPending
           ? 'Redirecting...'
+          : isSubmitting
+          ? 'Validating...'
           : initialData
           ? 'Update Profile'
           : 'Create Profile'}
