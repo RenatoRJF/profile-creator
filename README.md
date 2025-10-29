@@ -28,7 +28,15 @@ npm run prisma:generate
 npm run prisma:migrate
 ```
 
-4. **Start the development servers**
+4. **(Optional) Seed the database with fake profiles**
+```bash
+npm run prisma:seed
+```
+This will create 20 fake user profiles with realistic data and a test account:
+- Email: `test@example.com`
+- Password: `password123`
+
+5. **Start the development servers**
 
 In one terminal, start the backend:
 ```bash
@@ -253,11 +261,39 @@ profile-creator/
 
 ### Database
 
-The application uses SQLite for simplicity. To reset the database:
+The application uses SQLite for simplicity.
+
+#### Seeding the Database
+
+To populate the database with fake profiles for development and testing:
+
+```bash
+npm run prisma:seed
+```
+
+This will:
+- Create 20 fake user profiles with realistic data
+- Generate random skills from a pool of 50+ technologies
+- Use [DiceBear Avatars API](https://dicebear.com) for profile images
+- Create a test account with known credentials:
+  - **Email**: `test@example.com`
+  - **Password**: `password123`
+
+**Note**: The seed script will clear existing data before creating new profiles.
+
+#### Resetting the Database
+
+To reset the database and start fresh:
 ```bash
 cd apps/backend
 rm prisma/dev.db
 npx prisma migrate reset
+```
+
+Or reset and seed in one command:
+```bash
+cd apps/backend
+npx prisma migrate reset --force && npm run prisma:seed
 ```
 
 ### Environment Variables
@@ -299,6 +335,9 @@ npm run prisma:generate
 
 # Create new migration
 npm run prisma:migrate
+
+# Seed database with fake profiles
+npm run prisma:seed
 
 # Open Prisma Studio
 cd apps/backend && npm run prisma:studio

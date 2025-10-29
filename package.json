@@ -16,7 +16,8 @@
     "start": "npm run start --workspaces",
     "lint": "npm run lint --workspaces",
     "prisma:generate": "npm run prisma:generate --workspace=apps/backend",
-    "prisma:migrate": "npm run prisma:migrate:dev --workspace=apps/backend"
+    "prisma:migrate": "npm run prisma:migrate:dev --workspace=apps/backend",
+    "prisma:seed": "npm run prisma:seed --workspace=apps/backend"
   },
   "devDependencies": {
     "typescript": "^5"
