@@ -16,7 +16,7 @@ export default function DashboardLayout({
       {/* Sidebar wrapper - takes space when open, collapses when closed */}
       <div
         className={cn(
-          'transition-all duration-300 ease-in-out',
+          'transition-all duration-300 ease-in-out overflow-hidden',
           isOpen ? 'w-64' : 'w-0',
           'hidden lg:block'
         )}
